@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   componentWillMount(){
-    fetch('/user')
+    fetch('/login')
     .then((res) => res.text())
     .then(tk => this.setState({token:tk}))
   }
