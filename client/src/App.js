@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react';
-import './App.css';
+
 
 class App extends Component {
-
+  
   state = {
-    token:''
+    tokenUser:''
   }
-
+  
   componentWillMount(){
-    fetch('/login')
+  
+    fetch('/login',{
+      method:"POST",
+      headers: {'Content-Type':'application/json'},
+      body:JSON.stringify(
+        {user:{"login":"willian.lopes@hotmail.com","senha":"123"}}
+      )
+    })
     .then((res) => res.text())
-    .then(tk => this.setState({token:tk}))
+    .then(tk => this.setState({tokenUser:tk}))
   }
-
+  
   render() {
     return (
       <div>
-        <QRCode value={this.state.token} />
+        <div style={{margin:"15%"}}>
+         <QRCode value={this.state.tokenUser} />
+        </div>
+        
       </div>
-    );
+      );
+    }
   }
-}
-
-export default App;
+  
+  export default App;

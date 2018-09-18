@@ -1,8 +1,12 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 const path = require('path');
 const fetch = require('node-fetch');
 
 const app = express();
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -14,19 +18,16 @@ app.get('/api/getList', (req,res) => {
     console.log('Sent list of items');
 });
 
-app.get('/login', (req,res) => {
-    usuario = req.user;
-
+app.post('/login', (req,res) => {
+    console.log(req.body)
     fetch('https://gruponewtech.com.br/inc/usuario/login',{
         method:'POST',
         headers: {
             'Content-Type':'application/json',
-            'convenio-app': process.env.convenio
+            'convenio-app': '68b385bc7b9a40a0d2981e3d9ba45126'
         },
         mode: 'cors',
-        body:JSON.stringify({
-            usuario
-        })
+        body: JSON.stringify(req.body)
     })
     .then(res => res.json())
     .then(token => res.send(token))
