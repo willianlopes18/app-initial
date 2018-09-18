@@ -19,7 +19,7 @@ app.get('/user', (req,res) => {
         method:'POST',
         headers: {
             'Content-Type':'application/json',
-            'convenio-app': '68b385bc7b9a40a0d2981e3d9ba45126'
+            'convenio-app': process.env.convenio
         },
         mode: 'cors',
         body:JSON.stringify({
