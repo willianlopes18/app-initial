@@ -14,8 +14,10 @@ app.get('/api/getList', (req,res) => {
     console.log('Sent list of items');
 });
 
-app.get('/user', (req,res) => {
-    let resposta = fetch('https://gruponewtech.com.br/inc/usuario/login',{
+app.get('/login', (req,res) => {
+    usuario = req.user;
+
+    fetch('https://gruponewtech.com.br/inc/usuario/login',{
         method:'POST',
         headers: {
             'Content-Type':'application/json',
@@ -23,10 +25,7 @@ app.get('/user', (req,res) => {
         },
         mode: 'cors',
         body:JSON.stringify({
-            user:{
-                "login":"willian.lopes@hotmail.com",
-                "senha":"123"
-            }
+            usuario
         })
     })
     .then(res => res.json())
