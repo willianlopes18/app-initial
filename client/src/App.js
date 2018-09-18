@@ -8,7 +8,7 @@ class App extends Component {
     token:''
   }
 
-  componentDidMount(){
+  componentWillMount(){
     fetch('/user')
     .then((res) => res.text())
     .then(tk => this.setState({token:tk}))
