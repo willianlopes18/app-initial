@@ -1,36 +1,21 @@
-import React, { Component } from 'react';
-import QRCode from 'qrcode.react';
+import React,{Component} from "react";
+import AuthService from './components/AuthService';
+import withAuth from './components/WithAuth';
+import Dashboard from './templates/Dashboard/Dashboard';
+const Auth = new AuthService();
 
+class App extends Component{
+  
+  handleLogout(){
+    Auth.logout()
+    this.props.history.replace('/login');
+  }
 
-class App extends Component {
-  
-  state = {
-    tokenUser:''
+  render(){
+    return(
+      <Dashboard />
+    );
   }
-  
-  componentWillMount(){
-  
-    fetch('/login',{
-      method:"POST",
-      headers: {'Content-Type':'application/json'},
-      body:JSON.stringify(
-        {user:{"login":"willian.lopes@hotmail.com","senha":"123"}}
-      )
-    })
-    .then((res) => res.text())
-    .then(tk => this.setState({tokenUser:tk}))
-  }
-  
-  render() {
-    return (
-      <div>
-        <div style={{margin:"15%"}}>
-         <QRCode value={this.state.tokenUser} />
-        </div>
-        
-      </div>
-      );
-    }
-  }
-  
-  export default App;
+}
+
+export default withAuth(App);

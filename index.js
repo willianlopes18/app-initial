@@ -19,7 +19,6 @@ app.get('/api/getList', (req,res) => {
 });
 
 app.post('/login', (req,res) => {
-    console.log(req.body)
     fetch('https://gruponewtech.com.br/inc/usuario/login',{
         method:'POST',
         headers: {
@@ -30,8 +29,21 @@ app.post('/login', (req,res) => {
         body: JSON.stringify(req.body)
     })
     .then(res => res.json())
-    .then(token => res.send(token))
+    .then(token => res.json(token))
 });
+
+app.post('/verificar',(req,res) => {
+    fetch('https://gruponewtech.com.br/inc/usuario/verificar',{
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'x-access-token':req.body.token,
+            'convenio-app': '68b385bc7b9a40a0d2981e3d9ba45126'
+        },
+        mode: 'cors'
+    })
+    .then(resp => res.sendStatus(resp.status))
+})
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{
